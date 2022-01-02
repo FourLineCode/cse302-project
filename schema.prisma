@@ -1,0 +1,127 @@
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root@localhost:3306/social_media"
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+
+  email    String  @unique
+  username String  @unique
+  password String
+  bio      String? @default("")
+
+  friends_forward        Friendship[]          @relation("friends_forward")
+  friends_inverse        Friendship[]          @relation("friends_inverse")
+  pending_requests       FriendRequest[]       @relation("pending_requests")
+  sent_requests          FriendRequest[]       @relation("sent_requests")
+  posts                  Post[]
+  likes                  Like[]
+  comments               Comment[]
+  messages               Message[]             @relation("user_messages")
+  message_threads        MessageThread[]       @relation("user_threads")
+  message_thread_on_user MessageThreadOnUser[]
+}
+
+model Friendship {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+
+  first_user    User @relation("friends_forward", fields: [first_user_id], references: [id])
+  first_user_id Int
+
+  second_user    User @relation("friends_inverse", fields: [second_user_id], references: [id])
+  second_user_id Int
+
+  @@unique([first_user_id, second_user_id])
+}
+
+model FriendRequest {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+
+  from_user    User @relation("sent_requests", fields: [from_user_id], references: [id])
+  from_user_id Int
+
+  to_user    User @relation("pending_requests", fields: [to_user_id], references: [id])
+  to_user_id Int
+
+  @@unique([from_user_id, to_user_id])
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+
+  post_body String
+
+  author    User @relation(fields: [author_id], references: [id])
+  author_id Int
+
+  /// @onDelete(CASCADE)
+  likes   Like[]
+  /// @onDelete(CASCADE)
+  replies Comment[]
+}
+
+model Like {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+
+  post    Post @relation(fields: [post_id], references: [id])
+  post_id Int
+
+  user    User @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  @@unique([post_id, user_id])
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+
+  comment_body String
+
+  post    Post @relation(fields: [post_id], references: [id])
+  post_id Int
+
+  user    User @relation(fields: [user_id], references: [id])
+  user_id Int
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+
+  message_body String @default("")
+
+  author    User @relation("user_messages", fields: [author_id], references: [id])
+  author_id Int
+
+  thread    MessageThread @relation("thread_messages", fields: [thread_id], references: [id])
+  thread_id Int
+}
+
+model MessageThread {
+  id         Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+
+  participants        User[]                @relation("user_threads")
+  MessageThreadOnUser MessageThreadOnUser[]
+
+  messages Message[] @relation("thread_messages")
+}
+
+model MessageThreadOnUser {
+  created_at DateTime @default(now())
+
+  user    User @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  message_thread    MessageThread @relation(fields: [message_thread_id], references: [id])
+  message_thread_id Int
+
+  @@id([user_id, message_thread_id])
+}
