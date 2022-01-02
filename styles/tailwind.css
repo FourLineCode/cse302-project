@@ -5,5 +5,13 @@
 body {
     min-width: 100vw;
     min-height: 100vh;
-    @apply text-white bg-gray-900 antialiased;
+    @apply antialiased text-white bg-gray-900;
+}
+
+input {
+    @apply text-black;
+}
+
+textarea {
+    @apply text-black;
 }
