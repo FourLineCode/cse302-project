@@ -76,7 +76,9 @@ CREATE TABLE MessageThreadOnUser (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id INT NOT NULL,
     thread_id INT NOT NULL,
-    PRIMARY KEY (user_id, thread_id)
+    PRIMARY KEY (user_id, thread_id),
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (thread_id) REFERENCES MessageThread(id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- Create Message Table
