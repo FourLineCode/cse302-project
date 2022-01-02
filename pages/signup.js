@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
 export default function Signup() {
+    const router = useRouter();
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -21,6 +24,7 @@ export default function Signup() {
         console.log(data);
         if (data.success) {
             toast.success("Successfully signed up");
+            router.push("/login");
         } else {
             toast.error(data.message ?? "Something went wrong");
         }

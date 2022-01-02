@@ -1,7 +1,13 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../components/Context";
 
 export default function Login() {
+    const router = useRouter();
+    const auth = useContext(AuthContext);
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -11,7 +17,7 @@ export default function Login() {
             password: formData.get("password"),
         };
 
-        const res = await fetch("/api/signup", {
+        const res = await fetch("/api/login", {
             method: "POST",
             body: JSON.stringify(input),
         });
@@ -19,6 +25,8 @@ export default function Login() {
 
         if (data.success) {
             toast.success("Successfully logged in");
+            auth.setAuth({ authorized: true, user: data.user });
+            router.push("/home");
         } else {
             toast.error(data.message ?? "Something went wrong");
         }
