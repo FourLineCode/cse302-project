@@ -75,8 +75,8 @@ CREATE TABLE MessageThread (
 CREATE TABLE MessageThreadOnUser (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_id INT NOT NULL,
-    messagethread_id INT NOT NULL,
-    PRIMARY KEY (user_id, messagethread_id)
+    thread_id INT NOT NULL,
+    PRIMARY KEY (user_id, thread_id)
 );
 
 -- Create Message Table
