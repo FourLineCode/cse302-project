@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../components/Context";
 import { Layout } from "../components/Layout";
 
-export default function Home() {
+export default function Message() {
     const router = useRouter();
     const auth = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ export default function Home() {
     ) : (
         <Layout>
             <div className="flex items-center justify-center w-screen h-screen text-xl font-bold">
-                Home
+                Message
             </div>
         </Layout>
     );
