@@ -1,22 +1,29 @@
 import Link from "next/link";
-import { fetchApi } from "../lib/fetchApi";
+import toast from "react-hot-toast";
 
 export default function Signup() {
     const onSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
-        const data = {
+        const input = {
             email: formData.get("email"),
             username: formData.get("username"),
             password: formData.get("password"),
             bio: formData.get("bio"),
         };
 
-        const res = await fetchApi("/api/signup", {
+        const res = await fetch("/api/signup", {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify(input),
         });
+        const data = await res.json();
+        console.log(data);
+        if (data.success) {
+            toast.success("Successfully signed up");
+        } else {
+            toast.error(data.message ?? "Something went wrong");
+        }
     };
 
     return (
