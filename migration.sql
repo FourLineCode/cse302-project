@@ -4,7 +4,7 @@ CREATE DATABASE IF NOT EXISTS social_media;
 
 -- Create User table
 CREATE TABLE User (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     email TEXT NOT NULL,
     username TEXT NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE User (
 
 -- Create Friendship table
 CREATE TABLE Friendship (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     first_user_id INT NOT NULL,
     second_user_id INT NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE Friendship (
 
 -- Create FriendRequest table
 CREATE TABLE FriendRequest (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     from_user_id INT NOT NULL,
     to_user_id INT NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE FriendRequest (
 
 -- Create Post Table
 CREATE TABLE Post (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     post_body TEXT NOT NULL,
     author_id INT NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE Post (
 
 -- Create PostLike Table
 CREATE TABLE PostLike (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     post_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE PostLike (
 
 -- Create PostComment Table
 CREATE TABLE PostComment (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     comment_body TEXT NOT NULL,
     post_id INT NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE PostComment (
 
 -- Create MessageThread Table
 CREATE TABLE MessageThread (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -81,7 +81,7 @@ CREATE TABLE MessageThreadOnUser (
 
 -- Create Message Table
 CREATE TABLE Message (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     message_body TEXT NOT NULL,
     author_id INT NOT NULL,
