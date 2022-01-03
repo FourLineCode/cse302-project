@@ -13,9 +13,9 @@ export default function Profile() {
     return (
         <Layout>
             <div className="max-w-4xl mx-auto min-h-screen">
-                <div className="w-full h-64 bg-gradient-to-t from-gray-800 to-gray-900"></div>
+                <div className="w-full h-64 bg-gradient-to-t from-gray-600 to-gray-900"></div>
                 <div className="w-full flex">
-                    <div className="rounded-full w-44 h-44 -mt-12 bg-gray-700 flex justify-center items-center text-6xl text-gray-300 ml-12">
+                    <div className="rounded-full ring-2 ring-green-500 w-44 h-44 -mt-12 bg-gray-700 flex justify-center items-center text-6xl text-gray-300 ml-12">
                         <span>{auth.user.username[0].toUpperCase()}</span>
                     </div>
                     <div className="flex justify-between flex-1">
