@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 body {
-    min-width: 100vw;
-    min-height: 100vh;
     @apply font-sans antialiased text-white bg-gray-900;
 }
 

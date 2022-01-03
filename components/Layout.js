@@ -1,36 +1,35 @@
-import { ChatIcon, HomeIcon, SearchIcon, UserIcon } from "@heroicons/react/solid";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { AuthContext } from "../components/Context";
+import { Navbar } from "./Navbar";
 
 export function Layout({ children }) {
+    const router = useRouter();
+    const auth = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!auth.refreshing) {
+            if (!auth.authorized) {
+                router.push("/login");
+            } else {
+                setLoading(false);
+            }
+        }
+    }, [auth.refreshing]);
+
     return (
         <main>
-            <div className="flex justify-center w-full space-x-8 bg-gray-800 h-14">
-                <Link href="/home">
-                    <div className="flex flex-col items-center justify-center h-full px-4 cursor-pointer hover:bg-gray-700">
-                        <HomeIcon className="w-6 h-6" />
-                        <div className="text-sm">Home</div>
-                    </div>
-                </Link>
-                <Link href="/message">
-                    <div className="flex flex-col items-center justify-center h-full px-4 cursor-pointer hover:bg-gray-700">
-                        <ChatIcon className="w-6 h-6" />
-                        <div className="text-sm">Message</div>
-                    </div>
-                </Link>
-                <Link href="/profile">
-                    <div className="flex flex-col items-center justify-center h-full px-4 cursor-pointer hover:bg-gray-700">
-                        <UserIcon className="w-6 h-6" />
-                        <div className="text-sm">Profile</div>
-                    </div>
-                </Link>
-                <Link href="/search">
-                    <div className="flex flex-col items-center justify-center h-full px-4 cursor-pointer hover:bg-gray-700">
-                        <SearchIcon className="w-6 h-6" />
-                        <div className="text-sm">Search</div>
-                    </div>
-                </Link>
-            </div>
-            {children}
+            <Navbar />
+            {loading ? (
+                <div className="flex items-center justify-center w-full min-h-screen text-xl font-bold">
+                    Loading...
+                </div>
+            ) : (
+                children
+            )}
+            <Toaster position="bottom-center" />
         </main>
     );
 }
