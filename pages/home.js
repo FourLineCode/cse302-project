@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Layout } from "../components/Layout";
 import { Post } from "../components/Post";
+import { RequestCard } from "../components/RequestCard";
 
 export default function Home() {
     const [post, setPost] = useState("");
@@ -45,7 +46,19 @@ export default function Home() {
                         <Post />
                     </div>
                 </div>
-                <div className="w-80 h-screen rounded-lg bg-gray-800"></div>
+                <div className="w-80 space-y-4">
+                    <div className="text-center font-bold">Requests</div>
+                    {/* <div className="text-center text-gray-400 pt-12">You have no requests</div> */}
+                    <RequestCard />
+                    <RequestCard />
+                    <RequestCard />
+                    <RequestCard />
+                    <RequestCard />
+                    <RequestCard />
+                    <RequestCard />
+                    <RequestCard />
+                    <RequestCard />
+                </div>
             </div>
         </Layout>
     );
