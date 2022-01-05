@@ -9,8 +9,8 @@ export function Post({ post }) {
     const auth = useContext(AuthContext);
     const router = useRouter();
     const [liked, setLiked] = useState(false);
-    const [likeCount, setLikeCount] = useState(post.likes);
-    const [commentCount, setCommentCount] = useState(post.comments);
+    const [likeCount, setLikeCount] = useState(post.likeCount);
+    const [commentCount, setCommentCount] = useState(post.commentCount);
 
     const getLiked = async () => {
         try {

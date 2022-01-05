@@ -1,25 +1,32 @@
 import { TrashIcon } from "@heroicons/react/solid";
+import { formatDistanceToNow } from "date-fns";
+import { useContext } from "react";
+import { AuthContext } from "./Context";
 
-export function Comment() {
+export function Comment({ comment }) {
+    const auth = useContext(AuthContext);
+
     return (
-        <div className="p-4 rounded-lg bg-gray-800 w-full shadow-lg">
-            <div className="flex space-x-2 items-center">
-                <div className="rounded-full w-8 h-8 bg-gray-700 flex justify-center items-center text-xl text-gray-400">
-                    R
+        <div className="w-full p-4 bg-gray-800 rounded-lg shadow-lg">
+            <div className="flex items-center space-x-2">
+                <div className="flex items-center justify-center w-8 h-8 text-xl text-gray-400 bg-gray-700 rounded-full">
+                    {comment.author.username[0].toUpperCase()}
                 </div>
                 <div>
-                    <div className="font-semibold text-md">Username</div>
-                    <div className="text-xs text-gray-400">12 minute ago</div>
+                    <div className="font-semibold text-md">{comment.author.username}</div>
+                    <div className="text-xs text-gray-400">
+                        {formatDistanceToNow(new Date(comment.created_at))}
+                    </div>
                 </div>
             </div>
-            <div className="pl-8 pt-2 text-md">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </div>
-            <div className="flex pt-2 px-8 justify-end">
-                <div className="p-1.5 space-x-2 hover:bg-gray-500 flex items-center hover:bg-opacity-50 cursor-pointer rounded-full">
-                    <TrashIcon className="w-5 h-5 text-red-500" />
+            <div className="pt-2 pl-8 text-md">{comment.comment_body}</div>
+            {auth.user.id === comment.author.id && (
+                <div className="flex justify-end px-8 pt-2">
+                    <div className="p-1.5 space-x-2 hover:bg-gray-500 flex items-center hover:bg-opacity-50 cursor-pointer rounded-full">
+                        <TrashIcon className="w-5 h-5 text-red-500" />
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
