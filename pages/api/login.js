@@ -4,8 +4,8 @@ export default async function handler(req, res) {
     try {
         const input = JSON.parse(req.body);
 
-        const doesUserExistQuery = `SELECT * FROM User WHERE email = ?`;
-        const existingUsers = await query(doesUserExistQuery, [input.email]);
+        const doesUserExistQuery = `SELECT * FROM User WHERE email = ? LIMIT 1`;
+        const [existingUsers] = await query(doesUserExistQuery, [input.email]);
 
         if (existingUsers.length <= 0) {
             return res.json({
@@ -14,14 +14,14 @@ export default async function handler(req, res) {
             });
         }
 
-        if (input.password !== existingUsers[0].password_hash) {
+        if (input.password !== existingUsers.password_hash) {
             return res.json({
                 success: false,
                 message: "Invalid credentials",
             });
         }
 
-        res.json({ success: true, user: existingUsers[0] });
+        res.json({ success: true, user: existingUsers });
     } catch (error) {
         console.log(error);
     }
