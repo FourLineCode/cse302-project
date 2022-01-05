@@ -1,12 +1,20 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { Layout } from "../../components/Layout";
+import { Message } from "../../components/Message";
 import { ThreadCard } from "../../components/ThreadCard";
 
-export default function Message() {
+export default function MessagePage() {
     const router = useRouter();
     const { id } = router.query;
-    const [post, setPost] = useState("");
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        const form = new FormData(e.target);
+        console.log({ post: form.get("post") });
+
+        e.target.reset();
+    };
 
     return (
         <Layout>
@@ -27,22 +35,21 @@ export default function Message() {
                         </div>
                     ) : (
                         <div className="w-full h-full flex flex-col">
-                            <div className="w-full flex-1 overflow-y-auto">
-                                <div className="">
-                                    <span className="text-red-400 font-bold">Username: </span>
-                                    <span>
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        At, corporis. Accusantium quasi officia, eum libero,
-                                        voluptatibus dignissimos, harum esse reiciendis ex
-                                        repellendus placeat quam?
-                                    </span>
-                                </div>
+                            <div className="w-full divide-y divide-gray-800 space-y-4 flex-1 overflow-y-auto">
+                                <Message />
+                                <Message />
+                                <Message />
+                                <Message />
+                                <Message />
                             </div>
-                            <input
-                                type="text"
-                                placeholder="Send a message..."
-                                className="w-full p-3 bg-gray-800 text-white rounded-lg"
-                            />
+                            <form action="submit" onSubmit={onSubmit}>
+                                <input
+                                    type="text"
+                                    name="post"
+                                    placeholder="Send a message..."
+                                    className="w-full p-3 bg-gray-800 text-white rounded-lg"
+                                />
+                            </form>
                         </div>
                     )}
                 </div>
