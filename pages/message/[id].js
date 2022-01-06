@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../components/Context";
 import { Layout } from "../../components/Layout";
@@ -14,15 +14,7 @@ export default function MessagePage() {
     const [active, setActive] = useState(-1);
     const [messages, setMessages] = useState([]);
     let interval;
-
-    const onSubmit = (e) => {
-        e.preventDefault();
-
-        const form = new FormData(e.target);
-        console.log({ post: form.get("post") });
-
-        e.target.reset();
-    };
+    const container = useRef(null);
 
     const getAllThreads = async () => {
         try {
@@ -52,6 +44,7 @@ export default function MessagePage() {
 
     useEffect(() => {
         if (id !== "null") {
+            getMessages();
             interval = setInterval(getMessages, 1000);
         } else {
             clearInterval(interval);
@@ -61,6 +54,43 @@ export default function MessagePage() {
             clearInterval(interval);
         };
     }, [id]);
+
+    useEffect(() => {
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (container.current) {
+            container.current.scrollTop = container.current.scrollHeight;
+        }
+    }, [messages]);
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        const form = new FormData(e.target);
+
+        try {
+            const res = await fetch("/api/message/send", {
+                method: "POST",
+                body: JSON.stringify({
+                    author_id: auth.user.id,
+                    thread_id: id,
+                    body: form.get("message"),
+                }),
+            });
+            const data = await res.json();
+            if (data.success) {
+                getMessages();
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+
+        e.target.reset();
+    };
 
     return (
         <Layout>
@@ -83,7 +113,10 @@ export default function MessagePage() {
                         </div>
                     ) : (
                         <div className="flex flex-col w-full h-full">
-                            <div className="flex-1 w-full space-y-4 overflow-y-auto divide-y divide-gray-800">
+                            <div
+                                ref={container}
+                                className="flex-1 w-full mb-4 space-y-4 overflow-y-auto divide-y divide-gray-800"
+                            >
                                 {messages.length > 0 &&
                                     messages.map((message) => (
                                         <Message message={message} key={message.id} />
@@ -92,7 +125,7 @@ export default function MessagePage() {
                             <form action="submit" onSubmit={onSubmit}>
                                 <input
                                     type="text"
-                                    name="post"
+                                    name="message"
                                     placeholder="Send a message..."
                                     className="w-full p-3 text-white bg-gray-800 rounded-lg"
                                 />

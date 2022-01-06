@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
 import { AuthContext } from "../components/Context";
 import { Navbar } from "./Navbar";
 
@@ -29,7 +28,6 @@ export function Layout({ children }) {
             ) : (
                 children
             )}
-            <Toaster position="bottom-center" />
         </main>
     );
 }
