@@ -1,5 +1,6 @@
 import { AnnotationIcon, HeartIcon, TrashIcon } from "@heroicons/react/solid";
 import { formatDistanceToNow } from "date-fns";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -80,20 +81,22 @@ export function Post({ post }) {
     };
 
     return state ? (
-        <div className="p-4 rounded-lg bg-gray-800 w-full shadow-lg">
-            <div className="flex space-x-2 items-center">
-                <div className="rounded-full w-12 h-12 bg-gray-700 flex justify-center items-center text-xl text-gray-400">
-                    {post.author.username[0].toUpperCase()}
-                </div>
-                <div>
-                    <div className="font-semibold text-xl">{post.author.username}</div>
-                    <div className="text-sm text-gray-400">
-                        {formatDistanceToNow(new Date(post.created_at))}
+        <div className="w-full p-4 bg-gray-800 rounded-lg shadow-lg">
+            <Link href={`/profile/${post.author_id}`}>
+                <div className="flex items-center space-x-2 cursor-pointer">
+                    <div className="flex items-center justify-center w-12 h-12 text-3xl font-bold text-gray-400 bg-gray-700 rounded-full">
+                        {post.author.username[0].toUpperCase()}
+                    </div>
+                    <div>
+                        <div className="text-xl font-semibold">{post.author.username}</div>
+                        <div className="text-sm text-gray-400">
+                            {formatDistanceToNow(new Date(post.created_at))}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="pl-12 pt-4 text-lg">{post.post_body}</div>
-            <div className="flex pt-4 px-12 justify-between">
+            </Link>
+            <div className="pt-4 pl-12 text-lg">{post.post_body}</div>
+            <div className="flex justify-between px-12 pt-4">
                 <div className="flex space-x-4">
                     <div
                         onClick={likePost}

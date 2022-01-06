@@ -1,19 +1,23 @@
+import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 
-export function ThreadCard({ active = false }) {
+export function ThreadCard({ thread, onClick, active = false }) {
     return (
-        <Link href="/message/1">
+        <Link href={`/message/${thread.id}`}>
             <a
+                onClick={onClick}
                 className={`p-2.5 space-x-2 w-full rounded-lg flex items-center ${
                     active ? "bg-gray-800" : ""
                 }`}
             >
-                <div className="rounded-full w-12 h-12 bg-gray-700 flex justify-center items-center text-xl text-gray-400">
-                    R
+                <div className="flex items-center justify-center w-12 h-12 text-3xl font-bold text-gray-400 bg-gray-700 rounded-full">
+                    {thread.user.username[0].toUpperCase()}
                 </div>
                 <div>
-                    <div className="font-semibold text-xl">Username</div>
-                    <div className="text-sm text-gray-400">32 minutes ago</div>
+                    <div className="text-xl font-semibold">{thread.user.username}</div>
+                    <div className="text-sm text-gray-400">
+                        {formatDistanceToNow(new Date(thread.created_at))}
+                    </div>
                 </div>
             </a>
         </Link>

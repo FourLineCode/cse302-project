@@ -43,12 +43,12 @@ export function RequestCard({ request }) {
     };
 
     return state ? (
-        <div className="p-4 space-y-4 w-full bg-gray-800 rounded-lg">
+        <div className="w-full p-4 space-y-4 bg-gray-800 rounded-lg">
             <div
                 onClick={() => router.push(`/profile/${request.from_user_id}`)}
-                className="flex cursor-pointer items-center space-x-2"
+                className="flex items-center space-x-2 cursor-pointer"
             >
-                <div className="rounded-full w-12 h-12 bg-gray-700 flex justify-center items-center text-xl text-gray-400">
+                <div className="flex items-center justify-center w-12 h-12 text-3xl font-bold text-gray-400 bg-gray-700 rounded-full">
                     R
                 </div>
                 <div>
@@ -58,16 +58,16 @@ export function RequestCard({ request }) {
                     )} ago`}</div>
                 </div>
             </div>
-            <div className="flex justify-evenly items-center space-x-4">
+            <div className="flex items-center space-x-4 justify-evenly">
                 <button
                     onClick={decline}
-                    className="px-2 py-1 w-full ring-2 font-bold ring-green-500 rounded-lg hover:bg-green-500 hover:bg-opacity-40 bg-transparent"
+                    className="w-full px-2 py-1 font-bold bg-transparent rounded-lg ring-2 ring-green-500 hover:bg-green-500 hover:bg-opacity-40"
                 >
                     Decline
                 </button>
                 <button
                     onClick={accept}
-                    className="px-2 py-1 w-full rounded-lg font-bold hover:bg-green-600 bg-green-500"
+                    className="w-full px-2 py-1 font-bold bg-green-500 rounded-lg hover:bg-green-600"
                 >
                     Accept
                 </button>

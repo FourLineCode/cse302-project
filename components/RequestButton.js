@@ -99,37 +99,37 @@ export function RequestButton({ state: initial, user }) {
     return state === "NONE" ? (
         <button
             onClick={addFriend}
-            className="p-2 rounded-lg font-bold hover:bg-green-600 bg-green-500"
+            className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
         >
             Add Friend
         </button>
     ) : state === "FRIEND" ? (
         <button
             onClick={unfriend}
-            className="p-2 rounded-lg font-bold hover:bg-green-600 bg-green-500"
+            className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
         >
             Unfriend
         </button>
     ) : state === "SENT" ? (
         <button
             onClick={unsend}
-            className="p-2 rounded-lg font-bold hover:bg-green-600 bg-green-500"
+            className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
         >
-            Unsend
+            Unsend Request
         </button>
     ) : state === "PENDING" ? (
         <>
             <button
                 onClick={decline}
-                className="p-2 rounded-lg font-bold hover:bg-green-500 bg-transparent hover:bg-opacity-40 ring-2 ring-green-500"
+                className="p-2 font-bold bg-transparent rounded-lg hover:bg-green-500 hover:bg-opacity-40 ring-2 ring-green-500"
             >
                 Decline
             </button>
             <button
                 onClick={accept}
-                className="p-2 rounded-lg font-bold hover:bg-green-600 bg-green-500"
+                className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
             >
-                Accept
+                Accept Request
             </button>
         </>
     ) : null;

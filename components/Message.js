@@ -1,15 +1,15 @@
-export function Message() {
+import { formatDistanceToNow } from "date-fns";
+
+export function Message({ message }) {
     return (
         <div className="pt-2">
-            <div className="flex space-x-4 items-center">
-                <span className="text-lg text-green-500 font-bold">Username</span>
-                <span className="text-xs text-gray-500">43 minutes ago</span>
+            <div className="flex items-center space-x-4">
+                <span className="text-lg font-bold text-green-500">{message.author.username}</span>
+                <span className="text-xs text-gray-500">
+                    {formatDistanceToNow(new Date(message.created_at))}
+                </span>
             </div>
-            <span>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. At, corporis. Accusantium
-                quasi officia, eum libero, voluptatibus dignissimos, harum esse reiciendis ex
-                repellendus placeat quam?
-            </span>
+            <div>{message.message_body}</div>
         </div>
     );
 }

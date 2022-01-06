@@ -58,13 +58,28 @@ export default function Profile() {
         }
     }, [id]);
 
+    const goToThread = async () => {
+        try {
+            const res = await fetch("/api/message/create", {
+                method: "POST",
+                body: JSON.stringify({
+                    participants: [auth.user.id, id],
+                }),
+            });
+            const data = await res.json();
+            router.push(`/message/${data.thread_id}`);
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
     return (
         <Layout>
             {user && (
-                <div className="max-w-4xl mx-auto min-h-screen">
+                <div className="max-w-4xl min-h-screen mx-auto">
                     <div className="w-full h-64 bg-gradient-to-t from-gray-600 to-gray-900"></div>
-                    <div className="w-full flex">
-                        <div className="rounded-full ring-2 ring-green-500 w-44 h-44 -mt-12 bg-gray-700 flex justify-center items-center text-6xl text-gray-300 ml-12">
+                    <div className="flex w-full">
+                        <div className="flex items-center justify-center ml-12 -mt-12 font-bold text-gray-300 bg-gray-700 rounded-full text-8xl ring-2 ring-green-500 w-44 h-44">
                             <span>{user.username[0].toUpperCase()}</span>
                         </div>
                         <div className="flex justify-between flex-1">
@@ -75,11 +90,14 @@ export default function Profile() {
                                 </div>
                                 <div className="text-gray-400">{user.email}</div>
                             </div>
-                            <div className="space-x-4 pt-8">
+                            <div className="pt-8 space-x-4">
                                 {user.id !== auth.user.id && (
                                     <>
                                         {state === "FRIEND" && (
-                                            <button className="p-2 ring-2 font-bold ring-green-500 rounded-lg hover:bg-green-500 hover:bg-opacity-40 bg-transparent">
+                                            <button
+                                                onClick={goToThread}
+                                                className="p-2 font-bold bg-transparent rounded-lg ring-2 ring-green-500 hover:bg-green-500 hover:bg-opacity-40"
+                                            >
                                                 Message
                                             </button>
                                         )}
@@ -93,10 +111,10 @@ export default function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className="border-b-2 border-green-500 text-center text-xl font-bold mt-4">
+                    <div className="mt-4 text-xl font-bold text-center border-b-2 border-green-500">
                         Posts
                     </div>
-                    <div className="w-full space-y-4 p-4">
+                    <div className="w-full p-4 space-y-4">
                         {posts.length > 0 &&
                             posts.map((post) => <Post post={post} key={post.id} />)}
                     </div>
