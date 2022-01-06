@@ -1,4 +1,4 @@
-import { AnnotationIcon, HeartIcon, PencilIcon, TrashIcon } from "@heroicons/react/solid";
+import { AnnotationIcon, HeartIcon, TrashIcon } from "@heroicons/react/solid";
 import { formatDistanceToNow } from "date-fns";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -11,6 +11,7 @@ export function Post({ post }) {
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(post.likeCount);
     const [commentCount, setCommentCount] = useState(post.commentCount);
+    const [state, setState] = useState(true);
 
     const getLiked = async () => {
         try {
@@ -66,7 +67,19 @@ export function Post({ post }) {
         }
     };
 
-    return (
+    const deletePost = async () => {
+        try {
+            const res = await fetch(`/api/post/delete/${post.id}`);
+            const data = await res.json();
+            if (data.success) {
+                setState(false);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+    return state ? (
         <div className="p-4 rounded-lg bg-gray-800 w-full shadow-lg">
             <div className="flex space-x-2 items-center">
                 <div className="rounded-full w-12 h-12 bg-gray-700 flex justify-center items-center text-xl text-gray-400">
@@ -101,17 +114,15 @@ export function Post({ post }) {
                 </div>
                 <div className="flex space-x-4">
                     {post.author_id === auth.user.id && (
-                        <>
-                            <div className="p-1.5 items-center space-x-2 hover:bg-gray-500 flex hover:bg-opacity-50 cursor-pointer rounded-full">
-                                <PencilIcon className="w-5 h-5" />
-                            </div>
-                            <div className="p-1.5 space-x-2 hover:bg-gray-500 flex items-center hover:bg-opacity-50 cursor-pointer rounded-full">
-                                <TrashIcon className="w-5 h-5 text-red-500" />
-                            </div>
-                        </>
+                        <div
+                            onClick={deletePost}
+                            className="p-1.5 space-x-2 hover:bg-gray-500 flex items-center hover:bg-opacity-50 cursor-pointer rounded-full"
+                        >
+                            <TrashIcon className="w-5 h-5 text-red-500" />
+                        </div>
                     )}
                 </div>
             </div>
         </div>
-    );
+    ) : null;
 }

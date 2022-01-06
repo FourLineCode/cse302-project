@@ -2,7 +2,7 @@ import { query } from "../../../lib/db";
 
 export default async function handler(req, res) {
     const { post, author_id } = JSON.parse(req.body);
-    if (!post.trim()) {
+    if (!post.trim() || !author_id) {
         return res.status(400);
     }
 

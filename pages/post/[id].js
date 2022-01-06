@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Comment } from "../../components/Comment";
+import { AuthContext } from "../../components/Context";
 import { Layout } from "../../components/Layout";
 import { Post } from "../../components/Post";
 
 export default function PostPage() {
+    const auth = useContext(AuthContext);
     const router = useRouter();
     const id = router.query.id;
     const [post, setPost] = useState(null);
@@ -32,7 +34,23 @@ export default function PostPage() {
         e.preventDefault();
 
         const form = new FormData(e.target);
-        console.log({ comment: form.get("comment") });
+
+        try {
+            const res = await fetch(`/api/post/comment/send/${post.id}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    body: form.get("comment"),
+                    post_id: post.id,
+                    author_id: auth.user.id,
+                }),
+            });
+            const data = await res.json();
+            if (data.success) {
+                getPost();
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
 
         e.target.reset();
     };

@@ -1,31 +1,32 @@
 -   profile
 
-    -   [ ] show all info
-    -   [ ] request button
-        -   [ ] dont show for self
-        -   [ ] multiple states
+    -   [x] show all info
+    -   [x] request button
+        -   [x] dont show for self
+        -   [x] multiple states
     -   [ ] message button (creates thread)
-    -   [ ] show all posts
+    -   [x] show all posts
 
 -   search
 
-    -   [ ] show all users by default
+    -   [x] show all users by default
         -   [ ] except self
-    -   [ ] no request button (only on profile)
+    -   [x] no request button (only on profile)
 
 -   home
 
-    -   [ ] post input
-    -   [ ] post card
-    -   [ ] like button
-    -   [ ] comment button
-        -   [ ] takes to post page
-    -   [ ] show comments
-    -   [ ] show resuests on the side
+    -   [x] post input
+    -   [x] post card
+    -   [x] like button
+    -   [x] comment button
+        -   [x] takes to post page
+    -   [x] show comments
+    -   [x] show resuests on the side
 
 -   post page
 
-    -   [ ] comment input
+    -   [x] comment input
+    -   [x] delete comments
 
 -   message
 
@@ -35,5 +36,5 @@
 
 -   misc
     -   [ ] clicking on username redirect to profile
-    -   [ ] deleting things
+    -   [x] deleting things
     -   [ ] updating things
