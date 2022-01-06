@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         return res.json({ message: "User doesnt exists" });
     }
 
-    const getPostsQuery = `SELECT * FROM Post WHERE author_id = ?`;
+    const getPostsQuery = `SELECT * FROM Post WHERE author_id = ? ORDER BY created_at DESC`;
     const posts = await query(getPostsQuery, [id]);
 
     for (let i = 0; i < posts.length; i++) {
