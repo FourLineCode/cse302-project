@@ -21,7 +21,6 @@ export default function Signup() {
             body: JSON.stringify(input),
         });
         const data = await res.json();
-        console.log(data);
         if (data.success) {
             toast.success("Successfully signed up");
             router.push("/login");

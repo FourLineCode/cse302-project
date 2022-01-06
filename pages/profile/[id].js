@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../../components/Context";
 import { Layout } from "../../components/Layout";
 import { Post } from "../../components/Post";
+import { RequestButton } from "../../components/RequestButton";
 
 export default function Profile() {
     const router = useRouter();
@@ -11,12 +12,29 @@ export default function Profile() {
     const auth = useContext(AuthContext);
     const [user, setUser] = useState(null);
     const [posts, setPosts] = useState([]);
+    const [state, setState] = useState("NONE");
 
     const getUser = async () => {
         try {
             const res = await fetch(`/api/user/${id}`);
             const data = await res.json();
             setUser(data);
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+    const getState = async () => {
+        try {
+            const res = await fetch(`/api/user/state`, {
+                method: "POST",
+                body: JSON.stringify({
+                    curr_id: auth.user.id,
+                    user_id: id,
+                }),
+            });
+            const data = await res.json();
+            setState(data.state);
         } catch (error) {
             toast.error(error.message);
         }
@@ -35,6 +53,7 @@ export default function Profile() {
     useEffect(() => {
         if (id) {
             getUser();
+            getState();
             getPosts();
         }
     }, [id]);
@@ -57,12 +76,16 @@ export default function Profile() {
                                 <div className="text-gray-400">{user.email}</div>
                             </div>
                             <div className="space-x-4 pt-8">
-                                <button className="p-2 ring-2 font-bold ring-green-500 rounded-lg hover:bg-green-500 hover:bg-opacity-40 bg-transparent">
-                                    Message
-                                </button>
-                                <button className="p-2 rounded-lg font-bold hover:bg-green-600 bg-green-500">
-                                    Add Friend
-                                </button>
+                                {user.id !== auth.user.id && (
+                                    <>
+                                        {state === "FRIEND" && (
+                                            <button className="p-2 ring-2 font-bold ring-green-500 rounded-lg hover:bg-green-500 hover:bg-opacity-40 bg-transparent">
+                                                Message
+                                            </button>
+                                        )}
+                                        <RequestButton state={state} user={user} />
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

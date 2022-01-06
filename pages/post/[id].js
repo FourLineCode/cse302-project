@@ -14,7 +14,6 @@ export default function PostPage() {
         try {
             const res = await fetch(`/api/post/${id}`);
             const data = await res.json();
-            console.log(data);
             if (data) {
                 setPost(data);
             }

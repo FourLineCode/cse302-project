@@ -22,7 +22,6 @@ export function Post({ post }) {
                 }),
             });
             const data = await res.json();
-            console.log({ data });
             setLiked(data.liked);
         } catch (error) {
             toast.error(error.message);
