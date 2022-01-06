@@ -9,6 +9,7 @@ export default function Home() {
     const auth = useContext(AuthContext);
     const [post, setPost] = useState("");
     const [timeline, setTimeline] = useState([]);
+    const [requests, setRequests] = useState([]);
 
     const getTimeline = async () => {
         try {
@@ -20,11 +21,39 @@ export default function Home() {
         }
     };
 
+    const getRequests = async () => {
+        try {
+            const res = await fetch(`/api/request/timeline/${auth.user.id}`);
+            const data = await res.json();
+            setRequests(data);
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
     useEffect(() => {
         if (auth.authorized) {
             getTimeline();
+            getRequests();
         }
     }, [auth]);
+
+    const sendPost = async () => {
+        try {
+            const res = await fetch("/api/post/send", {
+                method: "POST",
+                body: JSON.stringify({
+                    post,
+                    author_id: auth.user.id,
+                }),
+            });
+            await getTimeline();
+        } catch (error) {
+            toast.error(error.message);
+        }
+
+        setPost("");
+    };
 
     return (
         <Layout>
@@ -42,7 +71,10 @@ export default function Home() {
                                 <span>Character length: </span>
                                 <span className="text-gray-200">{post.length}</span>
                             </div>
-                            <button className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600">
+                            <button
+                                onClick={sendPost}
+                                className="p-2 font-bold bg-green-500 rounded-lg hover:bg-green-600"
+                            >
                                 Share Post
                             </button>
                         </div>
@@ -59,16 +91,13 @@ export default function Home() {
                 </div>
                 <div className="space-y-4 w-80">
                     <div className="font-bold text-center">Requests</div>
-                    {/* <div className="pt-12 text-center text-gray-400">You have no requests</div> */}
-                    <RequestCard />
-                    <RequestCard />
-                    <RequestCard />
-                    <RequestCard />
-                    <RequestCard />
-                    <RequestCard />
-                    <RequestCard />
-                    <RequestCard />
-                    <RequestCard />
+                    {requests.length > 0 ? (
+                        requests.map((request) => (
+                            <RequestCard request={request} key={request.id} />
+                        ))
+                    ) : (
+                        <div className="pt-12 text-center text-gray-400">You have no requests</div>
+                    )}
                 </div>
             </div>
         </Layout>

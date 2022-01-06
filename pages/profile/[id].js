@@ -83,7 +83,11 @@ export default function Profile() {
                                                 Message
                                             </button>
                                         )}
-                                        <RequestButton state={state} user={user} />
+                                        <RequestButton
+                                            state={state}
+                                            user={user}
+                                            key={state + user.id}
+                                        />
                                     </>
                                 )}
                             </div>
