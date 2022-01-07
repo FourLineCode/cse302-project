@@ -4,7 +4,7 @@
     -   [x] request button
         -   [x] dont show for self
         -   [x] multiple states
-    -   [ ] message button (creates thread)
+    -   [x] message button (creates thread)
     -   [x] show all posts
 
 -   search
@@ -30,11 +30,11 @@
 
 -   message
 
-    -   [ ] show all threads on left
-    -   [ ] show discord style message
-    -   [ ] http polling
+    -   [x] show all threads on left
+    -   [x] show discord style message
+    -   [x] http polling
 
 -   misc
-    -   [ ] clicking on username redirect to profile
+    -   [x] clicking on username redirect to profile
     -   [x] deleting things
     -   [ ] updating things

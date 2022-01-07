@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { Layout } from "../../components/Layout";
 
 export default function MessageIndex() {
-    const router = useRouter();
+  const router = useRouter();
 
-    useEffect(() => {
-        router.push("/message/null");
-    }, []);
+  useEffect(() => {
+    router.push("/message/null");
+  }, []);
 
-    return <Layout />;
+  return <Layout />;
 }

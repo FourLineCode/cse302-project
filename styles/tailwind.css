@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 body {
-    @apply font-sans antialiased text-white bg-gray-900;
+  @apply font-sans antialiased text-white bg-gray-900;
 }
 
 input {
-    @apply text-black;
+  @apply text-black;
 }
 
 textarea {
-    @apply text-black;
+  @apply text-black;
 }
