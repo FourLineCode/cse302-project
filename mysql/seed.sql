@@ -19,7 +19,8 @@ INSERT INTO User (email, username, password_hash, bio) VALUES
 ("Ova_Feeney@gmail.com", "Obie_Mohr", "nP3qbPHs3tJ7M71", "Velit eveniet enim molestiae nam repellendus praesentium quidem expedita. Ex odit expedita necessitatibus temporibus dolorem porro dolor quae odit. Aperiam dolorum optio et cupiditate. Autem ut distinctio consequatur consectetur quae explicabo commodi corrupti odio. Nulla non est ipsam."),
 ("Cayla.Jacobson87@yahoo.com", "Annalise_Murray", "vWuTbc0PhyrdG5l", "Facere eum ut aut. Enim quo temporibus placeat deserunt rem. Nam et adipisci dolor ut omnis velit. Eaque ipsa similique quis ea alias. Velit quae vel temporibus excepturi laborum repudiandae. Minima eum aut et necessitatibus ut at aperiam."),
 ("Celia.Goldner85@yahoo.com", "Kimberly.Beahan", "hJa2F_dLjNjXtaD", "Quos nulla cumque et ea. Quam maiores rerum."),
-("Kristina.Deckow93@hotmail.com", "Gabriel61", "32KBX50EoiJgQ45", "Magni deserunt id labore asperiores. Soluta quae beatae commodi culpa doloremque impedit et eos maiores. Quae vel facere sit possimus.");
+("Kristina.Deckow93@hotmail.com", "Gabriel61", "32KBX50EoiJgQ45", "Magni deserunt id labore asperiores. Soluta quae beatae commodi culpa doloremque impedit et eos maiores. Quae vel facere sit possimus."),
+("root@root.com", "root", "root", "I made this website :)");
 
 -- Create friendships
 INSERT INTO Friendship (first_user_id, second_user_id) VALUES
@@ -122,7 +123,13 @@ INSERT INTO Friendship (first_user_id, second_user_id) VALUES
 (20, 16),
 (20, 14),
 (20, 12),
-(20, 5);
+(20, 5),
+(21, 4),
+(21, 6),
+(21, 8),
+(21, 10),
+(21, 12),
+(21, 14);
 
 -- Create friend requests
 INSERT INTO FriendRequest (from_user_id, to_user_id) VALUES
@@ -162,7 +169,12 @@ INSERT INTO FriendRequest (from_user_id, to_user_id) VALUES
 (19, 8),
 (19, 14),
 (20, 2),
-(20, 6);
+(20, 6),
+(3, 21),
+(5, 21),
+(7, 21),
+(9, 21),
+(11, 21);
 
 -- Create posts
 INSERT INTO Post (post_body, author_id) VALUES
